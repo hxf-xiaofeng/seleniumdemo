@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="all test suit">
+
+    <test verbose="10" preserve-order="true" name="register">
+        <classes>
+            <class name="TestCases.RegisterPageTest"/>
+        </classes>
+    </test>
+
+
+
+</suite>
+
+
