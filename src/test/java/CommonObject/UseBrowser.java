@@ -11,9 +11,8 @@ public class UseBrowser {
     //启动谷歌浏览器
     public WebDriver setupChrome(String url){
 
-        //System.setProperty("webdriver.chrome.driver","./src/main/resources/chromedriver.exe"); //本地机器运行
-
-        System.setProperty("webdriver.chrome.driver","src/main/resources/chromedriver.exe");//jenkins上运行
+        //System.setProperty("webdriver.chrome.driver","./src/main/resources/chromedriver.exe"); //window下IntelliJ IDEA运行
+        System.setProperty("webdriver.chrome.driver","src/main/resources/chromedriver");//linux下jenkins上运行
         driver = new ChromeDriver();
         driver.get(url);
         driver.manage().window().maximize();
