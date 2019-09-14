@@ -2,18 +2,24 @@ package CommonObject;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.concurrent.TimeUnit;
 
 public class UseBrowser {
     public WebDriver driver;
 
-    //启动谷歌浏览器
+    //启动谷歌浏览器-windows版
     public WebDriver setupChrome(String url){
 
         //System.setProperty("webdriver.chrome.driver","./src/main/resources/chromedriver.exe"); //window下IntelliJ IDEA运行
         System.setProperty("webdriver.chrome.driver","src/main/resources/chromedriver");//linux下jenkins上运行
-        driver = new ChromeDriver();
+        ChromeOptions options= new ChromeOptions();
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--headless");
+        options.addArguments("--disable-gpu");
+        driver = new ChromeDriver(options);
         driver.get(url);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15,TimeUnit.SECONDS);
