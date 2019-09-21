@@ -1,32 +1,32 @@
 package TestCases;
 
-import CommonObject.UseBrowser;
+import CommonObject.GetDriverUtil;
 import PageObjectOperation.RegisterPage;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.AssertJUnit;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import ru.yandex.qatools.allure.annotations.Title;
 
-@Epic("FINEXBOX注册页面")
+@Epic("RegisterPage")
+@Feature("Register Feature")
 public class RegisterPageTest {
     RegisterPage page = new RegisterPage();
-    UseBrowser browser = new UseBrowser();
+    GetDriverUtil browser = new GetDriverUtil();
     WebDriver driver ;
 
     //测试开始前设置启动浏览器及指向URL
-    @BeforeTest
+    @BeforeTest(description = "初始化浏览器设置,设置指向url:https://www.finexbox.com//Reg/register.html")
     public void init(){
         driver=browser.setupChrome("https://www.finexbox.com//Reg/register.html");
     }
 
-
-    @Test(description = "邮箱输入框输入邮箱,验证邮箱是否已存在")
-    @Story("检验邮箱是否已存在")
-
+    @Step("点击邮箱输入框,输入邮箱,等待提示语显示,TestNG断言进行判断")
+    @Story("邮箱输入框_邮箱已存在提示语")
+    @Test()
     public void checkEmail_Exist() throws InterruptedException {
         page.input_Email(driver,"379506993@qq.com");
         page.click_Register(driver);
@@ -40,8 +40,10 @@ public class RegisterPageTest {
         }
     }
 
-    @Test(dataProvider = "email",dataProviderClass = dataSource.registerData.class,description ="邮箱输入框输入邮箱,验证输入邮箱格式" )
-    @Story("检查输入邮箱格式")
+    @Step("点击邮箱输入框，输入非法邮箱及空邮箱,等待提示语显示,TestNG断言进行判断")
+    @Story("邮箱输入框_邮箱非法提示语")
+    @Description("123")
+    @Test(dataProvider = "email",dataProviderClass = dataSource.registerData.class)
     public void checkEmail_Format( String email) throws InterruptedException {
         if(email == ""){
             page.input_Email(driver,email);
@@ -60,9 +62,9 @@ public class RegisterPageTest {
         }
     }
 
-
-    @Test(dataProvider = "password",dataProviderClass = dataSource.registerData.class,description = "密码输入框输入密码,验证输入密码格式")
-    @Story("检查输入密码格式")
+    @Step("点击密码输入框,输入非法密码和空密码，等待提示语显示，TestNG断言进行判断")
+    @Story("密码输入框_邮箱非法提示语")
+    @Test(dataProvider = "password",dataProviderClass = dataSource.registerData.class)
     public void checkPass_Format(String password) throws InterruptedException {
         if(password == ""){
             page.input_Email(driver,"");
@@ -77,9 +79,9 @@ public class RegisterPageTest {
         }
     }
 
-
-    @Test(dataProvider = "repassword",dataProviderClass = dataSource.registerData.class,description = "确认密码框输入确认密码,验证确认密码格式")
-    @Story("检查确认密码格式")
+    @Step("点击确认密码输入框,输入非法确认密码和空确认密码，等待提示语显示，TestNG断言进行判断")
+    @Story("确认密码输入框_确认密码非法提示语")
+    @Test(dataProvider = "repassword",dataProviderClass = dataSource.registerData.class)
     public void checkConfirmPass_Format(String repassword) throws InterruptedException {
         if(repassword == ""){
             page.input_Password(driver,"");
@@ -94,8 +96,9 @@ public class RegisterPageTest {
         }
     }
 
-    @Test(dataProvider = "pwd_compare",dataProviderClass = dataSource.registerData.class,description = "密码框和确认密码框输入不同密码,验证两次输入密码是否一致")
-    @Story("检查两次输入密码是否一致")
+    @Step("点击密码输入框并输入密码，点击确认密码输入框并输入错误密码，等待提示语显示,TestNG断言进行判断")
+    @Story("确认密码输入框_两次输入密码不一致提示语")
+    @Test(dataProvider = "pwd_compare",dataProviderClass = dataSource.registerData.class)
     public void pwd_Compare(String pwd1,String pwd2){
         page.input_Password(driver,pwd1);
         page.input_RePassword(driver,pwd2);
@@ -103,20 +106,19 @@ public class RegisterPageTest {
         AssertJUnit.assertEquals("The password is not consistent. Please enter again.",
                 driver.findElement(By.xpath(page.RePassword_error_msg_XPATH)).getText());
     }
-    //注册
-    @Test(enabled = false)
 
+    @Severity(SeverityLevel.BLOCKER)
+    @Story("注册")
+    @Test()
     public void register(){
-        page.input_Email(driver,"");
+        page.input_Email(driver,"123456@ds.com");
         page.input_Password(driver,"123123");
         page.input_RePassword(driver,"123123");
         page.input_ReferralIDs(driver,"113319");
         page.click_Register(driver);
     }
 
-
-
-    @AfterTest
+    @AfterTest(description = "关闭浏览器")
     public void close(){
         driver.quit();
     }
