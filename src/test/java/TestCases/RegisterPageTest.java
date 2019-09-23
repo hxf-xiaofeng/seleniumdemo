@@ -5,6 +5,7 @@ import PageObjectOperation.RegisterPage;
 import io.qameta.allure.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.AssertJUnit;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -26,13 +27,12 @@ public class RegisterPageTest {
 
     @Step("点击邮箱输入框,输入邮箱,等待提示语显示,TestNG断言进行判断")
     @Story("邮箱输入框_邮箱已存在提示语")
-    @Test()
+    @Description("注册的反向用例")
+    @Test(priority = 1)
     public void checkEmail_Exist() throws InterruptedException {
         page.input_Email(driver,"379506993@qq.com");
         page.click_Register(driver);
         String msg=driver.findElement(By.xpath(page.Email_error_msg_XPATH)).getText();
-        long round=Math.round(1.5);
-        System.out.print(round);
         if(msg.equals("error")){
             AssertJUnit.assertEquals("error", msg);
         }else {
@@ -42,8 +42,8 @@ public class RegisterPageTest {
 
     @Step("点击邮箱输入框，输入非法邮箱及空邮箱,等待提示语显示,TestNG断言进行判断")
     @Story("邮箱输入框_邮箱非法提示语")
-    @Description("123")
-    @Test(dataProvider = "email",dataProviderClass = dataSource.registerData.class)
+    @Description("注册的反向用例")
+    @Test(priority = 2,dataProvider = "email",dataProviderClass = dataSource.registerData.class)
     public void checkEmail_Format( String email) throws InterruptedException {
         if(email == ""){
             page.input_Email(driver,email);
@@ -64,6 +64,7 @@ public class RegisterPageTest {
 
     @Step("点击密码输入框,输入非法密码和空密码，等待提示语显示，TestNG断言进行判断")
     @Story("密码输入框_邮箱非法提示语")
+    @Description("注册的反向用例")
     @Test(dataProvider = "password",dataProviderClass = dataSource.registerData.class)
     public void checkPass_Format(String password) throws InterruptedException {
         if(password == ""){
@@ -81,6 +82,7 @@ public class RegisterPageTest {
 
     @Step("点击确认密码输入框,输入非法确认密码和空确认密码，等待提示语显示，TestNG断言进行判断")
     @Story("确认密码输入框_确认密码非法提示语")
+    @Description("注册的反向用例")
     @Test(dataProvider = "repassword",dataProviderClass = dataSource.registerData.class)
     public void checkConfirmPass_Format(String repassword) throws InterruptedException {
         if(repassword == ""){
@@ -98,8 +100,9 @@ public class RegisterPageTest {
 
     @Step("点击密码输入框并输入密码，点击确认密码输入框并输入错误密码，等待提示语显示,TestNG断言进行判断")
     @Story("确认密码输入框_两次输入密码不一致提示语")
+    @Description("注册的反向用例")
     @Test(dataProvider = "pwd_compare",dataProviderClass = dataSource.registerData.class)
-    public void pwd_Compare(String pwd1,String pwd2){
+    public void pwd_Compare(String pwd1,String pwd2)throws InterruptedException{
         page.input_Password(driver,pwd1);
         page.input_RePassword(driver,pwd2);
         page.click_Register(driver);
@@ -107,15 +110,29 @@ public class RegisterPageTest {
                 driver.findElement(By.xpath(page.RePassword_error_msg_XPATH)).getText());
     }
 
-    @Severity(SeverityLevel.BLOCKER)
-    @Story("注册")
-    @Test()
-    public void register(){
-        page.input_Email(driver,"123456@ds.com");
-        page.input_Password(driver,"123123");
-        page.input_RePassword(driver,"123123");
-        page.input_ReferralIDs(driver,"113319");
+    @Step("点击各个输入框并依次输入合法的邮箱-密码-确认密码,点击推荐人ID输入框并输入非法ID,点击register按钮,等待提示语显示,TestNG断言进行判断")
+    @Story("推荐ID输入框_ID非法提示语")
+    @Description("注册的反向用例")
+    @Test(priority = 0)
+    public void checkReffalID()throws InterruptedException{
+        page.input_Email(driver,"xiaofeng@qq.org");
+        page.input_Password(driver,"123456");
+        page.input_RePassword(driver,"123456");
+        page.input_ReferralIDs(driver,"10000000");
         page.click_Register(driver);
+        Assert.assertEquals("Please enter a value less than or equal to 9999999",
+                driver.findElement(By.xpath(page.reffalIDs_error_msg_XPATH)).getText());
+    }
+
+    @Step("点击各个输入框并依次输入合法的邮箱-密码-确认密码-推荐人ID,无提示语显示即输入合法")
+    @Story("注册的测试用例")
+    @Description("注册的正向用例")
+    @Test(dataProvider = "register",dataProviderClass = dataSource.registerData.class)
+    public void register(String email,String pwd)throws InterruptedException{
+        page.input_Email(driver,email);
+        page.input_Password(driver,pwd);
+        page.input_RePassword(driver,pwd);
+        page.input_ReferralIDs(driver,"113319");
     }
 
     @AfterTest(description = "关闭浏览器")

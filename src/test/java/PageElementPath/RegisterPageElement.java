@@ -16,4 +16,6 @@ public class RegisterPageElement {
 
     public String RePassword_error_msg_XPATH="//*[@id=\"repwdmsg\"]/font";
     public String RePassword_Empty_XPATH="//*[@id=\"repwdmsg\"]";
+
+    public String reffalIDs_error_msg_XPATH="//*[@id=\"pidmsg\"]";
 }
