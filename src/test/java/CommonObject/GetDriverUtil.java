@@ -19,7 +19,7 @@ public class GetDriverUtil {
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--headless");
         options.addArguments("--disable-gpu");
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(options);
         driver.get(url);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15,TimeUnit.SECONDS);
