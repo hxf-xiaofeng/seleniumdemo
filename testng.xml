@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="all test suit">
-
-    <test verbose="10" preserve-order="true" name="register">
+    <test verbose="10" preserve-order="true" name="registerpage">
         <classes>
-            <class name="TestCases.RegisterPageTest"/>
+            <class name="TestCases.RegisterPageTest">
+                <methods>
+                    <include name="checkPass_Format"/>
+                    <include name="checkConfirmPass_Format"/>
+                    <include name="pwd_Compare"/>
+                    <include name="checkReffalID"/>
+                    <include name="checkEmail_Exist"/>
+                    <include name="checkEmail_Format"/>
+                    <include name="register"/>
+                </methods>
+            </class>
         </classes>
     </test>
 

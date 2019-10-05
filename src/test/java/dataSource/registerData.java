@@ -11,11 +11,7 @@ public class registerData {
                 {""},
                 {"dhqwoifhqw"},
                 {"asdfgh.asd"},
-                {"xiaofeng@asd.wpof"},
-                {"xiaofeng@asd.w"},
                 {"@123.com"},
-                {"xiaofeng@a.w"},
-                {"xiaofeng$qq.com"}
         };
     }
     //非法密码

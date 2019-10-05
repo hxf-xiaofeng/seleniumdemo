@@ -28,7 +28,7 @@ public class RegisterPageTest {
     @Step("点击邮箱输入框,输入邮箱,等待提示语显示,TestNG断言进行判断")
     @Story("邮箱输入框_邮箱已存在提示语")
     @Description("注册的反向用例")
-    @Test(priority = 1)
+    @Test()
     public void checkEmail_Exist() throws InterruptedException {
         page.input_Email(driver,"379506993@qq.com");
         page.click_Register(driver);
@@ -43,7 +43,7 @@ public class RegisterPageTest {
     @Step("点击邮箱输入框，输入非法邮箱及空邮箱,等待提示语显示,TestNG断言进行判断")
     @Story("邮箱输入框_邮箱非法提示语")
     @Description("注册的反向用例")
-    @Test(priority = 2,dataProvider = "email",dataProviderClass = dataSource.registerData.class)
+    @Test(dataProvider = "email",dataProviderClass = dataSource.registerData.class)
     public void checkEmail_Format( String email) throws InterruptedException {
         if(email == ""){
             page.input_Email(driver,email);
@@ -113,13 +113,15 @@ public class RegisterPageTest {
     @Step("点击各个输入框并依次输入合法的邮箱-密码-确认密码,点击推荐人ID输入框并输入非法ID,点击register按钮,等待提示语显示,TestNG断言进行判断")
     @Story("推荐ID输入框_ID非法提示语")
     @Description("注册的反向用例")
-    @Test(priority = 0)
+    @Test()
     public void checkReffalID()throws InterruptedException{
         page.input_Email(driver,"xiaofeng@qq.org");
         page.input_Password(driver,"123456");
         page.input_RePassword(driver,"123456");
         page.input_ReferralIDs(driver,"10000000");
+        Thread.sleep(1000);
         page.click_Register(driver);
+        Thread.sleep(1000);
         Assert.assertEquals("Please enter a value less than or equal to 9999999",
                 driver.findElement(By.xpath(page.reffalIDs_error_msg_XPATH)).getText());
     }

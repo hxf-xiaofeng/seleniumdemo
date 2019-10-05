@@ -13,11 +13,12 @@ public class GetDriverUtil {
     public WebDriver setupChrome(String url){
 
         //System.setProperty("webdriver.chrome.driver","./src/main/resources/chromedriver.exe"); //window下IntelliJ IDEA运行
+
         System.setProperty("webdriver.chrome.driver","src/main/resources/chromedriver");//linux下jenkins上运行
         ChromeOptions options= new ChromeOptions();
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--headless");
+        addArguments("--headless");
         options.addArguments("--disable-gpu");
         driver = new ChromeDriver(options);
         driver.get(url);
