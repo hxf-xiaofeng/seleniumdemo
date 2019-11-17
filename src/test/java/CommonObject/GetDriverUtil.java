@@ -18,7 +18,7 @@ public class GetDriverUtil {
         ChromeOptions options= new ChromeOptions();
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-        addArguments("--headless");
+        options.addArguments("--headless");
         options.addArguments("--disable-gpu");
         driver = new ChromeDriver(options);
         driver.get(url);
