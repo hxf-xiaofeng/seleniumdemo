@@ -1,6 +1,6 @@
 package testcases;
 
-import commonobject.GetDriverUtil;
+
 import commonobject.GetWebDriverUtil;
 import weboperation.RegisterPage;
 import io.qameta.allure.*;
