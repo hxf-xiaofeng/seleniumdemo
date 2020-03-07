@@ -3,7 +3,7 @@
 <suite name="all test suit">
     <test verbose="10" preserve-order="true" name="registerpage">
         <classes>
-            <class name="TestCases.RegisterPageTest">
+            <class name="testcases.RegisterPageTest">
                 <methods>
                     <include name="checkPass_Format"/>
                     <include name="checkConfirmPass_Format"/>
