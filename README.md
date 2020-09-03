@@ -1,1 +1,1 @@
-# seleniumdemo
+该项目集成了selenium,testNG,allure等框架,可用于web的自动化测试,通过存放在github上并使用jenkins进行相应操作,可实现项目的持续集成与自动化构建.
